@@ -1,8 +1,13 @@
 {
   "name": "note-taking-app",
+  "productName": "Note Taking App",
   "version": "1.0.0",
+  "description": "Simple sticky notes desktop app with custom drawable attachments",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^latest"
   }
 }
