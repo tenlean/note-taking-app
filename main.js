@@ -7,11 +7,11 @@ function createWindow() {
     resizable: false,
     maximizable: false,
     fullscreenable: false,
-    frame: false, 
+    frame: false,
     transparent: false,
     webPreferences: {
-      contextIsolation: true
-    }
+      contextIsolation: true,
+    },
   });
 
   win.loadFile("index.html");
