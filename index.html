@@ -8,10 +8,35 @@
 
   <body>
     <div class="app">
-      <div class="title">Tenzin's Calendar</div>
-      <div id="calendar">
-        <div id="day"></div>
-        <div id="month"></div>
+      <div id="homeView" class="view">
+        <button
+          id="openCalendarBtn"
+          class="nav-icon-button nav-icon-right"
+          type="button"
+          aria-label="Open calendar"
+        >
+          <img src="assets/calendar-icon.png" alt="" class="calendar-icon-img" draggable="false" />
+        </button>
+        <div class="title">Tenzin's Home</div>
+        <div id="homePanel">
+          <div class="home-placeholder">home view</div>
+        </div>
+      </div>
+
+      <div id="calendarView" class="view hidden-view">
+        <button
+          id="backToHomeBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to home"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Tenzin's Calendar</div>
+        <div id="calendar">
+          <div id="day"></div>
+          <div id="month"></div>
+        </div>
       </div>
     </div>
 
