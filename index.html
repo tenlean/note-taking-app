@@ -8,7 +8,9 @@
 
   <body>
     <div class="app">
+      <!-- Home view: entry point for notes and navigation to other modules -->
       <div id="homeView" class="view">
+        <!-- Open drawings list view -->
         <button
           id="openDrawingsBtn"
           class="nav-icon-button nav-icon-left"
@@ -22,6 +24,7 @@
             draggable="false"
           />
         </button>
+        <!-- Open calendar view -->
         <button
           id="openCalendarBtn"
           class="nav-icon-button nav-icon-right"
@@ -36,6 +39,7 @@
           />
         </button>
         <div class="title">Tenzin's Home</div>
+        <!-- Notes list panel (new note action + saved notes list) -->
         <div id="homePanel">
           <div class="notes-panel-inner">
             <button id="newNoteBtn" class="new-note-tab" type="button">
@@ -48,6 +52,7 @@
         </div>
       </div>
 
+      <!-- Calendar view: date display with a single back action -->
       <div id="calendarView" class="view hidden-view">
         <button
           id="backToHomeBtn"
@@ -64,6 +69,7 @@
         </div>
       </div>
 
+      <!-- Note editor view: edit title/content, save, or go back without saving -->
       <div id="noteEditorView" class="view hidden-view">
         <button
           id="backFromEditorBtn"
@@ -97,6 +103,7 @@
         </div>
       </div>
 
+      <!-- Drawings list view: create/open/delete saved drawing files -->
       <div id="drawingView" class="view hidden-view">
         <button
           id="backFromDrawingsBtn"
@@ -119,6 +126,7 @@
         </div>
       </div>
 
+      <!-- Drawing editor view: canvas drawing workflow with save and clear actions -->
       <div id="drawingEditorView" class="view hidden-view">
         <button
           id="backFromDrawingEditorBtn"
@@ -148,6 +156,7 @@
                 type="button"
                 aria-label="Clear drawing"
               >
+                <!-- Icon-only clear button to keep editor actions compact -->
                 <img
                   src="assets/clear-icon.png"
                   alt=""
@@ -157,6 +166,7 @@
               </button>
             </div>
           </div>
+          <!-- Fixed-size drawing surface; data exported as PNG -->
           <canvas
             id="drawingCanvas"
             class="drawing-canvas"

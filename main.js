@@ -2,15 +2,19 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
+// Persistent storage locations under Electron userData
 const notesDir = path.join(app.getPath("userData"), "notes");
 const drawingsDir = path.join(app.getPath("userData"), "drawings");
 
+// Creates storage directories if missing
 function ensureDir(dirPath) {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
   }
 }
 
+// Drawings are named as: encodedTitle__id.png
+// This parser reconstructs metadata for list rendering
 function parseDrawingFileName(fileName) {
   const match = fileName.match(/^(.*)__([a-zA-Z0-9_-]+)\.png$/);
   if (!match) {
@@ -30,11 +34,13 @@ function parseDrawingFileName(fileName) {
   };
 }
 
+// Encodes title safely for filenames and appends unique id
 function makeDrawingFileName(id, title) {
   const safeTitle = encodeURIComponent((title || "Untitled Drawing").trim());
   return `${safeTitle || "Untitled%20Drawing"}__${id}.png`;
 }
 
+// Finds the current drawing file by id (useful for rename updates)
 function findDrawingFileById(id) {
   const files = fs.readdirSync(drawingsDir);
   return files.find((file) => file.endsWith(`__${id}.png`)) || null;
@@ -43,6 +49,7 @@ function findDrawingFileById(id) {
 ensureDir(notesDir);
 ensureDir(drawingsDir);
 
+// Creates the frameless Electron window for the renderer app
 function createWindow() {
   const win = new BrowserWindow({
     title: "My note taking app",
@@ -63,6 +70,7 @@ function createWindow() {
   win.loadFile("index.html");
 }
 
+// -------------------- Notes IPC --------------------
 ipcMain.handle("notes:loadAll", async () => {
   try {
     const files = fs.readdirSync(notesDir);
@@ -121,6 +129,7 @@ ipcMain.handle("notes:delete", async (event, id) => {
   }
 });
 
+// -------------------- Drawings IPC --------------------
 ipcMain.handle("drawings:loadAll", async () => {
   try {
     const files = fs.readdirSync(drawingsDir);
@@ -170,6 +179,7 @@ ipcMain.handle("drawings:save", async (event, drawing) => {
     const nextFileName = makeDrawingFileName(id, title || "Untitled Drawing");
     const outputPath = path.join(drawingsDir, nextFileName);
 
+    // Renderer sends PNG as data URL; write binary payload to disk
     const base64Payload = imageDataUrl.split(",")[1] || "";
     fs.writeFileSync(outputPath, Buffer.from(base64Payload, "base64"));
 
@@ -203,6 +213,7 @@ ipcMain.handle("drawings:delete", async (event, id) => {
   }
 });
 
+// App lifecycle bootstrapping
 app.whenReady().then(createWindow);
 
 app.on("window-all-closed", () => {

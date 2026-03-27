@@ -1,3 +1,12 @@
+// ------------------------------------------------------------
+// Renderer-side app logic
+// Handles:
+// 1) View navigation
+// 2) Notes CRUD UI interactions
+// 3) Drawings CRUD UI interactions + canvas drawing behavior
+// ------------------------------------------------------------
+
+// Updates the calendar card using the user's local date
 function updateCalendar() {
   const now = new Date();
   const day = now.getDate();
@@ -22,6 +31,7 @@ function updateCalendar() {
   document.getElementById("month").textContent = month;
 }
 
+// Shows exactly one view at a time by toggling `hidden-view`
 function showView(viewId) {
   const views = [
     "homeView",
@@ -41,16 +51,19 @@ function showView(viewId) {
   });
 }
 
+// In-memory UI state (source of truth while app is open)
 let allNotes = [];
 let currentEditingNote = null;
 let allDrawings = [];
 let currentEditingDrawing = null;
 
+// Fixed drawing rules: black pen with a constant brush size
 const DRAW_BRUSH_SIZE = 3;
 let drawingCanvas = null;
 let drawingCtx = null;
 let isDrawing = false;
 
+// Loads all note files through preload/main IPC and renders list UI
 async function loadNotesFromFiles() {
   try {
     allNotes = await window.electron.notes.loadAll();
@@ -60,6 +73,7 @@ async function loadNotesFromFiles() {
   }
 }
 
+// Renders notes list and wires row button handlers
 function renderNotes() {
   const notesList = document.getElementById("notesList");
 
@@ -94,6 +108,7 @@ function renderNotes() {
   });
 }
 
+// Loads all drawing PNGs through preload/main IPC and renders list UI
 async function loadDrawingsFromFiles() {
   try {
     allDrawings = await window.electron.drawings.loadAll();
@@ -103,6 +118,7 @@ async function loadDrawingsFromFiles() {
   }
 }
 
+// Renders drawings list and wires row button handlers
 function renderDrawings() {
   const drawingsList = document.getElementById("drawingsList");
   if (!drawingsList) {
@@ -146,6 +162,7 @@ function renderDrawings() {
   });
 }
 
+// Initializes canvas context + pointer handlers for freehand drawing
 function initDrawingCanvas() {
   drawingCanvas = document.getElementById("drawingCanvas");
   if (!drawingCanvas) {
@@ -161,6 +178,7 @@ function initDrawingCanvas() {
   clearDrawingCanvas();
 
   drawingCanvas.addEventListener("pointerdown", (event) => {
+    // Start a new stroke from the pointer location
     isDrawing = true;
     const point = getCanvasPoint(event);
     drawingCtx.beginPath();
@@ -172,6 +190,7 @@ function initDrawingCanvas() {
       return;
     }
 
+    // Continue the active stroke while pointer is pressed
     const point = getCanvasPoint(event);
     drawingCtx.lineTo(point.x, point.y);
     drawingCtx.stroke();
@@ -185,6 +204,7 @@ function initDrawingCanvas() {
   drawingCanvas.addEventListener("pointerleave", stopDrawing);
 }
 
+// Converts viewport coordinates to canvas pixel coordinates
 function getCanvasPoint(event) {
   const rect = drawingCanvas.getBoundingClientRect();
   const scaleX = drawingCanvas.width / rect.width;
@@ -196,6 +216,7 @@ function getCanvasPoint(event) {
   };
 }
 
+// Clears the canvas to a white background (no eraser tool used)
 function clearDrawingCanvas() {
   if (!drawingCtx || !drawingCanvas) {
     return;
@@ -205,6 +226,7 @@ function clearDrawingCanvas() {
   drawingCtx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
 }
 
+// Loads a previously saved PNG (data URL) into the canvas
 function loadDrawingToCanvas(dataUrl) {
   return new Promise((resolve) => {
     if (!drawingCtx || !drawingCanvas || !dataUrl) {
@@ -229,6 +251,7 @@ function loadDrawingToCanvas(dataUrl) {
   });
 }
 
+// Starts a new unsaved drawing session
 function createNewDrawing() {
   currentEditingDrawing = {
     id: "drawing-" + Date.now(),
@@ -241,6 +264,7 @@ function createNewDrawing() {
   showView("drawingEditorView");
 }
 
+// Opens an existing drawing in the editor for modifications
 async function openDrawingEditor(drawingId) {
   const drawing = allDrawings.find((item) => item.id === drawingId);
   if (!drawing) {
@@ -259,6 +283,7 @@ async function openDrawingEditor(drawingId) {
   await loadDrawingToCanvas(drawing.imageDataUrl);
 }
 
+// Saves current canvas snapshot + title as a PNG entry
 async function saveCurrentDrawing() {
   if (!currentEditingDrawing || !drawingCanvas) {
     return;
@@ -298,6 +323,7 @@ async function saveCurrentDrawing() {
   }
 }
 
+// Deletes a drawing file and refreshes drawings list UI
 async function deleteDrawing(drawingId) {
   try {
     const result = await window.electron.drawings.delete(drawingId);
@@ -312,6 +338,7 @@ async function deleteDrawing(drawingId) {
   }
 }
 
+// Starts a new unsaved note session
 function createNewNote() {
   const noteId = "note-" + Date.now();
   currentEditingNote = {
@@ -326,6 +353,7 @@ function createNewNote() {
   showView("noteEditorView");
 }
 
+// Opens an existing note in the editor for modifications
 function openNoteEditor(noteId) {
   const note = allNotes.find((n) => n.id === noteId);
   if (!note) return;
@@ -342,6 +370,7 @@ function openNoteEditor(noteId) {
   showView("noteEditorView");
 }
 
+// Saves current note title/content to file storage
 async function saveCurrentNote() {
   if (!currentEditingNote) return;
 
@@ -372,6 +401,7 @@ async function saveCurrentNote() {
   }
 }
 
+// Deletes a note file and refreshes notes list UI
 async function deleteNote(noteId) {
   try {
     const result = await window.electron.notes.delete(noteId);
@@ -384,6 +414,7 @@ async function deleteNote(noteId) {
   }
 }
 
+// Top-level navigation buttons (home/calendar/drawings)
 const openCalendarBtn = document.getElementById("openCalendarBtn");
 const openDrawingsBtn = document.getElementById("openDrawingsBtn");
 const backToHomeBtn = document.getElementById("backToHomeBtn");
@@ -406,6 +437,7 @@ if (backToHomeBtn) {
   });
 }
 
+// Editor/list action buttons for notes and drawings modules
 const backFromEditorBtn = document.getElementById("backFromEditorBtn");
 const noteSaveBtn = document.getElementById("noteSaveBtn");
 const newNoteBtn = document.getElementById("newNoteBtn");
@@ -467,6 +499,7 @@ if (drawingClearBtn) {
   });
 }
 
+// App startup sequence
 initDrawingCanvas();
 showView("homeView");
 updateCalendar();

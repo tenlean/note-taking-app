@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+/* Pixel font used across the app for the retro UI look */
 @font-face {
   font-family: "Pixeboy";
   src:
@@ -20,6 +21,7 @@ body {
   overflow: hidden;
 }
 
+/* Body is draggable because the Electron window is frameless */
 body {
   margin: 0;
   user-select: none;
@@ -28,6 +30,7 @@ body {
   background: transparent;
 }
 
+/* Outer frame container shared by all views */
 .app {
   position: relative;
   display: flex;
@@ -45,6 +48,7 @@ body {
   opacity: 0.8;
 }
 
+/* Each app screen is a view; JS toggles hidden-view to switch screens */
 .view {
   position: relative;
   display: flex;
@@ -59,6 +63,7 @@ body {
   display: none;
 }
 
+/* Interactive controls must be no-drag so clicks and pointer input work */
 button,
 input,
 textarea,
@@ -68,6 +73,7 @@ canvas {
   cursor: pointer;
 }
 
+/* Shared title pill used at the top of each view */
 .title {
   display: flex;
   width: 157px;
@@ -92,6 +98,7 @@ canvas {
   line-height: normal;
 }
 
+/* Reusable top-corner icon button for navigation */
 .nav-icon-button {
   position: absolute;
   top: 0;
@@ -131,6 +138,7 @@ canvas {
   margin-left: 0.1rem;
 }
 
+/* Home panel container (notes list) */
 #homePanel {
   display: flex;
   width: 11.25rem;
@@ -144,6 +152,7 @@ canvas {
   background-position: center;
 }
 
+/* Drawings list panel mirrors the home panel layout */
 #drawingPanel {
   display: flex;
   width: 11.25rem;
@@ -185,6 +194,7 @@ canvas {
   background-position: center;
 }
 
+/* Calendar day/month typography styles */
 #day {
   color: #fff;
   text-align: center;
@@ -219,6 +229,7 @@ canvas {
   width: 8.125rem;
 }
 
+/* Shared list panel layout used by notes and drawings views */
 .notes-panel-inner {
   width: 100%;
   height: 100%;
@@ -228,6 +239,7 @@ canvas {
   padding: 0.3rem;
 }
 
+/* Shared "new item" button style for notes/drawings */
 .new-note-tab {
   align-self: center;
   min-height: 1.3rem;
@@ -241,6 +253,7 @@ canvas {
   line-height: 1;
 }
 
+/* Scrollable list of saved items */
 .notes-list {
   width: 100%;
   flex: 1;
@@ -257,6 +270,7 @@ canvas {
   gap: 0.3rem;
 }
 
+/* Primary list item button (open item) */
 .note-open-btn {
   flex: 1;
   min-width: 0;
@@ -275,6 +289,7 @@ canvas {
   text-overflow: ellipsis;
 }
 
+/* Compact delete button used in list rows */
 .note-delete-btn {
   width: 1.2rem;
   height: 1.2rem;
@@ -291,6 +306,7 @@ canvas {
   line-height: 1;
 }
 
+/* Empty-state text shown when no notes/drawings are saved yet */
 .notes-empty {
   margin-top: 0.2rem;
   color: #fff;
@@ -305,6 +321,7 @@ canvas {
   letter-spacing: 0.08rem;
 }
 
+/* Shared editor panel style for note and drawing editors */
 .note-editor-overlay {
   position: relative;
   width: 11.25rem;
@@ -327,6 +344,7 @@ canvas {
   gap: 0.3rem;
 }
 
+/* Editor title input */
 .note-title-input {
   flex: 1;
   min-width: 0;
@@ -345,6 +363,7 @@ canvas {
   gap: 0.25rem;
 }
 
+/* Shared editor action button style */
 .note-editor-btn {
   height: 1.35rem;
   padding: 0 0.35rem;
@@ -356,6 +375,7 @@ canvas {
   font-size: 0.85rem;
 }
 
+/* Icon-only clear control for the drawing editor */
 .drawing-clear-icon-btn {
   width: 1.35rem;
   min-width: 1.35rem;
@@ -372,6 +392,7 @@ canvas {
   pointer-events: none;
 }
 
+/* Note body textarea (scrollable, fixed within editor panel) */
 .note-content-input {
   width: 100%;
   flex: 1;
@@ -388,6 +409,7 @@ canvas {
   overflow-y: auto;
 }
 
+/* Drawing editor panel (title/actions + canvas) */
 .drawing-editor-panel {
   position: relative;
   width: 11.25rem;
@@ -400,6 +422,7 @@ canvas {
   background: rgba(3, 141, 13, 0.15);
 }
 
+/* Canvas drawing surface; pointer input handled in script.js */
 .drawing-canvas {
   width: 100%;
   flex: 1;
@@ -410,6 +433,7 @@ canvas {
   touch-action: none;
 }
 
+/* Drawings list buttons mirror note list buttons for consistency */
 .drawing-open-btn {
   flex: 1;
   min-width: 0;
