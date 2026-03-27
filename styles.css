@@ -29,6 +29,7 @@ body {
 }
 
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,10 +45,25 @@ body {
   opacity: 0.8;
 }
 
+.view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.hidden-view {
+  display: none;
+}
+
 button,
 input,
 textarea,
-select {
+select,
+canvas {
   -webkit-app-region: no-drag;
   cursor: pointer;
 }
@@ -74,6 +90,84 @@ select {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.nav-icon-button {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 1.35rem;
+  height: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #038d0d;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.nav-icon-left {
+  left: 0;
+}
+
+.nav-icon-right {
+  right: 0;
+}
+
+.calendar-icon-img {
+  width: 0.85rem;
+  height: 0.85rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.back-arrow-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-left: 2px solid #038d0d;
+  border-bottom: 2px solid #038d0d;
+  transform: rotate(45deg);
+  margin-left: 0.1rem;
+}
+
+#homePanel {
+  display: flex;
+  width: 11.25rem;
+  height: 10.0625rem;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("assets/inner-frame-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#drawingPanel {
+  display: flex;
+  width: 11.25rem;
+  height: 10.0625rem;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("assets/inner-frame-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.home-placeholder {
+  color: #fff;
+  text-align: center;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0.2rem;
 }
 
 #calendar {
@@ -123,4 +217,229 @@ select {
   letter-spacing: 0.3rem;
 
   width: 8.125rem;
+}
+
+.notes-panel-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.3rem;
+}
+
+.new-note-tab {
+  align-self: center;
+  min-height: 1.3rem;
+  padding: 0 0.45rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.notes-list {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-right: 0.1rem;
+}
+
+.note-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.note-open-btn {
+  flex: 1;
+  min-width: 0;
+  height: 1.2rem;
+  padding: 0 0.35rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  text-align: left;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-delete-btn {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.notes-empty {
+  margin-top: 0.2rem;
+  color: #fff;
+  text-align: center;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08rem;
+}
+
+.note-editor-overlay {
+  position: relative;
+  width: 11.25rem;
+  height: 10.0625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 0.45rem;
+  background: rgba(3, 141, 13, 0.15);
+}
+
+.hidden-overlay {
+  display: none;
+}
+
+.note-editor-header {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.note-title-input {
+  flex: 1;
+  min-width: 0;
+  height: 1.35rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #038d0d;
+  padding: 0 0.35rem;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.95rem;
+}
+
+.note-editor-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.note-editor-btn {
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.85rem;
+}
+
+.drawing-clear-icon-btn {
+  width: 1.35rem;
+  min-width: 1.35rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawing-clear-icon {
+  width: 0.72rem;
+  height: 0.72rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.note-content-input {
+  width: 100%;
+  flex: 1;
+  min-height: 7.5rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #038d0d;
+  padding: 0.35rem;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.85rem;
+  line-height: 1.1;
+  resize: none;
+  overflow-y: auto;
+}
+
+.drawing-editor-panel {
+  position: relative;
+  width: 11.25rem;
+  height: 10.0625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 0.45rem;
+  background: rgba(3, 141, 13, 0.15);
+}
+
+.drawing-canvas {
+  width: 100%;
+  flex: 1;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: #fff;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.drawing-open-btn {
+  flex: 1;
+  min-width: 0;
+  height: 1.2rem;
+  padding: 0 0.35rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  text-align: left;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawing-delete-btn {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
 }

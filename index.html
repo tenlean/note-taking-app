@@ -8,10 +8,162 @@
 
   <body>
     <div class="app">
-      <div class="title">Tenzin's Calendar</div>
-      <div id="calendar">
-        <div id="day"></div>
-        <div id="month"></div>
+      <div id="homeView" class="view">
+        <button
+          id="openDrawingsBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Open drawings"
+        >
+          <img
+            src="assets/pen-icon.png"
+            alt=""
+            class="calendar-icon-img"
+            draggable="false"
+          />
+        </button>
+        <button
+          id="openCalendarBtn"
+          class="nav-icon-button nav-icon-right"
+          type="button"
+          aria-label="Open calendar"
+        >
+          <img
+            src="assets/calendar-icon.png"
+            alt=""
+            class="calendar-icon-img"
+            draggable="false"
+          />
+        </button>
+        <div class="title">Tenzin's Home</div>
+        <div id="homePanel">
+          <div class="notes-panel-inner">
+            <button id="newNoteBtn" class="new-note-tab" type="button">
+              + New Note
+            </button>
+            <div class="notes-list" id="notesList">
+              <div class="notes-empty">No notes yet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="calendarView" class="view hidden-view">
+        <button
+          id="backToHomeBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to home"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Tenzin's Calendar</div>
+        <div id="calendar">
+          <div id="day"></div>
+          <div id="month"></div>
+        </div>
+      </div>
+
+      <div id="noteEditorView" class="view hidden-view">
+        <button
+          id="backFromEditorBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to home"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Edit Note</div>
+        <div class="note-editor-overlay" id="noteEditorOverlay">
+          <div class="note-editor-header">
+            <input
+              id="noteTitleInput"
+              type="text"
+              class="note-title-input"
+              placeholder="Note title"
+              value="New Note"
+            />
+            <div class="note-editor-actions">
+              <button id="noteSaveBtn" class="note-editor-btn" type="button">
+                Save
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="noteContentInput"
+            class="note-content-input"
+            placeholder="Note content..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div id="drawingView" class="view hidden-view">
+        <button
+          id="backFromDrawingsBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to home"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Tenzin's Drawings</div>
+        <div id="drawingPanel">
+          <div class="notes-panel-inner">
+            <button id="newDrawingBtn" class="new-note-tab" type="button">
+              + New Drawing
+            </button>
+            <div class="notes-list" id="drawingsList">
+              <div class="notes-empty">No drawings yet</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="drawingEditorView" class="view hidden-view">
+        <button
+          id="backFromDrawingEditorBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to drawings"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Edit Drawing</div>
+        <div class="drawing-editor-panel">
+          <div class="note-editor-header">
+            <input
+              id="drawingTitleInput"
+              type="text"
+              class="note-title-input"
+              placeholder="Drawing title"
+              value="New Drawing"
+            />
+            <div class="note-editor-actions">
+              <button id="drawingSaveBtn" class="note-editor-btn" type="button">
+                Save
+              </button>
+              <button
+                id="drawingClearBtn"
+                class="note-editor-btn drawing-clear-icon-btn"
+                type="button"
+                aria-label="Clear drawing"
+              >
+                <img
+                  src="assets/clear-icon.png"
+                  alt=""
+                  class="drawing-clear-icon"
+                  draggable="false"
+                />
+              </button>
+            </div>
+          </div>
+          <canvas
+            id="drawingCanvas"
+            class="drawing-canvas"
+            width="160"
+            height="100"
+          ></canvas>
+        </div>
       </div>
     </div>
 
