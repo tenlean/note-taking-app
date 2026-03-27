@@ -15,11 +15,23 @@
           type="button"
           aria-label="Open calendar"
         >
-          <img src="assets/calendar-icon.png" alt="" class="calendar-icon-img" draggable="false" />
+          <img
+            src="assets/calendar-icon.png"
+            alt=""
+            class="calendar-icon-img"
+            draggable="false"
+          />
         </button>
         <div class="title">Tenzin's Home</div>
         <div id="homePanel">
-          <div class="home-placeholder">home view</div>
+          <div class="notes-panel-inner">
+            <button id="newNoteBtn" class="new-note-tab" type="button">
+              + New Note
+            </button>
+            <div class="notes-list" id="notesList">
+              <div class="notes-empty">No notes yet</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -36,6 +48,39 @@
         <div id="calendar">
           <div id="day"></div>
           <div id="month"></div>
+        </div>
+      </div>
+
+      <div id="noteEditorView" class="view hidden-view">
+        <button
+          id="backFromEditorBtn"
+          class="nav-icon-button nav-icon-left"
+          type="button"
+          aria-label="Back to home"
+        >
+          <span class="back-arrow-icon" aria-hidden="true"></span>
+        </button>
+        <div class="title">Edit Note</div>
+        <div class="note-editor-overlay" id="noteEditorOverlay">
+          <div class="note-editor-header">
+            <input
+              id="noteTitleInput"
+              type="text"
+              class="note-title-input"
+              placeholder="Note title"
+              value="New Note"
+            />
+            <div class="note-editor-actions">
+              <button id="noteSaveBtn" class="note-editor-btn" type="button">
+                Save
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="noteContentInput"
+            class="note-content-input"
+            placeholder="Note content..."
+          ></textarea>
         </div>
       </div>
     </div>
