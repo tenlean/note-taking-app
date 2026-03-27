@@ -62,7 +62,8 @@ body {
 button,
 input,
 textarea,
-select {
+select,
+canvas {
   -webkit-app-region: no-drag;
   cursor: pointer;
 }
@@ -131,6 +132,19 @@ select {
 }
 
 #homePanel {
+  display: flex;
+  width: 11.25rem;
+  height: 10.0625rem;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("assets/inner-frame-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#drawingPanel {
   display: flex;
   width: 11.25rem;
   height: 10.0625rem;
@@ -342,6 +356,22 @@ select {
   font-size: 0.85rem;
 }
 
+.drawing-clear-icon-btn {
+  width: 1.35rem;
+  min-width: 1.35rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawing-clear-icon {
+  width: 0.72rem;
+  height: 0.72rem;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 .note-content-input {
   width: 100%;
   flex: 1;
@@ -356,4 +386,60 @@ select {
   line-height: 1.1;
   resize: none;
   overflow-y: auto;
+}
+
+.drawing-editor-panel {
+  position: relative;
+  width: 11.25rem;
+  height: 10.0625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 0.45rem;
+  background: rgba(3, 141, 13, 0.15);
+}
+
+.drawing-canvas {
+  width: 100%;
+  flex: 1;
+  border: 1px solid #038d0d;
+  border-radius: 0.35rem;
+  background: #fff;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.drawing-open-btn {
+  flex: 1;
+  min-width: 0;
+  height: 1.2rem;
+  padding: 0 0.35rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  text-align: left;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.9rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawing-delete-btn {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid #038d0d;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: #038d0d;
+  font-family: "Pixeboy", monospace;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
 }
