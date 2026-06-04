@@ -18,9 +18,9 @@ Note Taking App is a lightweight Electron desktop app for creating text notes, c
 
 This project uses Electron with HTML, CSS, and vanilla JavaScript to keep the app fast, simple, and easy to understand while still supporting desktop file storage.
 
-I followed this tutorial as a starting point: <https://www.youtube.com/watch?v=btxGSJ3Dh8E>
+I followed this tutorial as a starting point: <https://www.youtube.com/watch?v=btxGSJ3Dh8E>.
 
-Figma design: <https://www.figma.com/design/wrgDeTSraG2D9PucyOAjkC/UI-Design?node-id=0-1&t=YdJG3D9eOvKyBFMy-1>
+Figma design: <https://www.figma.com/design/wrgDeTSraG2D9PucyOAjkC/UI-Design?node-id=0-1&t=YdJG3D9eOvKyBFMy-1>.
 
 ## Technologies
 
